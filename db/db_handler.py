@@ -72,7 +72,8 @@ def init_db(conn):
         status TEXT,
         storage_space NUMERIC,
         time TIMESTAMP,
-        timestamp TIMESTAMP
+        timestamp TIMESTAMP,
+        insertion_time TIMESTAMP
     );
     """
 
@@ -118,7 +119,8 @@ def init_db(conn):
         content_toilet_usage_type TEXT,
         content_toilet_detection TEXT,
         content_upload TEXT,
-        content_error TEXT
+        content_error TEXT,
+        insertion_time TIMESTAMP
     );
     """
 
@@ -231,7 +233,8 @@ def insert_petfeed_event(conn, record):
     record['empty'] = bool(record.get('empty', False))
     record['is_executed'] = bool(record.get('is_executed', False))
     record['is_need_upload_video'] = bool(record.get('is_need_upload_video', False))
-
+    
+    record['insertion_time'] = datetime.now()
 
     insert_query = """
         INSERT INTO feeder_events (
@@ -241,7 +244,7 @@ def insert_petfeed_event(conn, record):
             event_id, event_type, expire, expire1, expire2, is_executed,
             is_need_upload_video, left_weight, mark, media_api, media_list,
             name, pet_id, preview, preview1, preview2, record_type, src, start_time, state,
-            status, storage_space, time, timestamp
+            status, storage_space, time, timestamp, insertion_time
         ) VALUES (
             %(aes_key)s, %(aes_key1)s, %(aes_key2)s, %(amount)s, %(amount1)s, %(amount2)s, %(completed_at)s,
             %(content)s, %(desc)s, %(device_id)s, %(duration)s, %(eat_end_time)s, %(eat_start_time)s,
@@ -249,7 +252,7 @@ def insert_petfeed_event(conn, record):
             %(event_id)s, %(event_type)s, %(expire)s, %(expire1)s, %(expire2)s, %(is_executed)s,
             %(is_need_upload_video)s, %(left_weight)s, %(mark)s, %(media_api)s, %(media_list)s,
             %(name)s, %(pet_id)s, %(preview)s, %(preview1)s, %(preview2)s, %(record_type)s, %(src)s, %(start_time)s, %(state)s,
-            %(status)s, %(storage_space)s, %(time)s, %(timestamp)s
+            %(status)s, %(storage_space)s, %(time)s, %(timestamp)s, %(insertion_time)s
         )
         ON CONFLICT DO NOTHING;
     """
@@ -322,6 +325,8 @@ def insert_litter_event(conn, record):
     if 'timestamp' in record and record['timestamp']:
         record['timestamp'] = datetime.fromtimestamp(record['timestamp'])
 
+    record['insertion_time'] = datetime.now()  # Add insertion time for logging
+
     insert_query = """
         INSERT INTO litterbox_events (
             aes_key,avatar,device_id,duration,enum_event_type,event_id,event_type,expire,
@@ -329,7 +334,8 @@ def insert_litter_event(conn, record):
             shit_pictures,storage_space,timestamp,toilet_detection,upload,user_id,content_area,
             content_auto_clear,content_clear_over_tips,content_count,content_interval,content_mark,
             content_media,content_pet_out_tips,content_pet_weight_g,content_pet_weight_lb,content_start_time,content_time_in,
-            content_time_out,content_toilet_duration,content_toilet_usage_type,content_toilet_detection,content_upload,content_error
+            content_time_out,content_toilet_duration,content_toilet_usage_type,content_toilet_detection,content_upload,content_error,
+            insertion_time
         ) VALUES (
             %(aes_key)s,%(avatar)s,%(device_id)s,%(duration)s,%(enum_event_type)s,%(event_id)s,
             %(event_type)s,%(expire)s,%(is_need_upload_video)s,%(mark)s,%(media)s,%(media_api)s,
@@ -337,7 +343,8 @@ def insert_litter_event(conn, record):
             %(timestamp)s,%(toilet_detection)s,%(upload)s,%(user_id)s,%(content_area)s,%(content_auto_clear)s,
             %(content_clear_over_tips)s,%(content_count)s,%(content_interval)s,%(content_mark)s,%(content_media)s,
             %(content_pet_out_tips)s,%(content_pet_weight_g)s,%(content_pet_weight_lb)s,%(content_start_time)s,%(content_time_in)s,
-            %(content_time_out)s,%(content_toilet_duration)s,%(content_toilet_usage_type)s,%(content_toilet_detection)s,%(content_upload)s,%(content_error)s
+            %(content_time_out)s,%(content_toilet_duration)s,%(content_toilet_usage_type)s,%(content_toilet_detection)s,%(content_upload)s,%(content_error)s,
+            %(insertion_time)s
         )
         ON CONFLICT DO NOTHING;
     """
