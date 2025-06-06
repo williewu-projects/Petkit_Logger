@@ -256,7 +256,7 @@ def insert_petfeed_event(conn, record):
         )
         ON CONFLICT DO NOTHING;
     """
-    try:
+    try:   
         with conn.cursor() as cur:
             cur.execute(insert_query, record)
         conn.commit()
@@ -270,6 +270,8 @@ def insert_petfeed_event(conn, record):
 def insert_litter_event(conn, record):
     
     record['event_id'] = record.get('timestamp', None)  #TEXT
+    if record['event_id'] is None:
+        return  # If event_id is None, do not insert the record
 
     # Flatten content record 
     record['content_area'] = record['content'].get('area', None)                         #TEXT

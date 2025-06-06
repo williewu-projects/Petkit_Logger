@@ -8,19 +8,23 @@ logger = setup_logger(__name__)
 #Fetches feeder eat events and loads them to the db
 def handleFeederData(conn, objFeederRecord, recordType='eat'):
 
-    print(f"Inserting records\r\n")
-    logger.info(f"Inserting records for {recordType}")
+    print(f"Inserting Feeder Records\r\n")
+    logger.info(f"Inserting Feeder Records")
     for value in objFeederRecord:
-        print(f"Inserting Record: {value} \r\n\r\n")
-        logger.info(f"Inserting Record: {value} for record type {recordType}")
+
         tempDict = value.model_dump()
         tempDict['record_type'] = recordType
+        if (tempDict['event_id'] is None):
+            continue
+
+        print(f"Inserting Feeder Record: {value} \r\n\r\n")
+        logger.info(f"Inserting Feeder Record: {value} for record type {recordType}")
         dbhandler.insert_petfeed_event(conn, tempDict)
 
 def handleLitterData(conn, objLitterRecords):
 
     print(f"Litterbox records\r\n")
-    logger.info("Inserting litterbox records")
+    logger.info("Inserting Litterbox records")
     for value in objLitterRecords:
         print(f"Inserting Litterbox Record: {value} \r\n\r\n")
         logger.info(f"Inserting Litterbox Record: {value}")
