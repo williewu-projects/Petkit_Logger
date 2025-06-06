@@ -49,7 +49,7 @@ def init_db(conn):
         end_time TIMESTAMP,
         enum_event_type TEXT,
         event TEXT,
-        event_id TEXT UNIQUE,
+        event_id TEXT UNIQUE NOT NULL,
         event_type TEXT,
         expire TIMESTAMP,
         expire1 TIMESTAMP,
