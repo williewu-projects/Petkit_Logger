@@ -63,9 +63,5 @@ The data can then be visualized, queried, and integrated into **custom dashboard
 
 ---
 
-<img width="1044" height="318" alt="image" src="https://github.com/user-attachments/assets/44926ea9-aa2c-48a4-bc1e-340fdebfd544" />
-
----
-
 ## 📜 License
 MIT License © 2025 Willie Wu
