@@ -43,16 +43,17 @@ The data can then be visualized, queried, and integrated into **custom dashboard
    source .venv/bin/activate   # Windows: .venv\Scripts\activate
    pip install -r requirements.txt
 3. Configure environment variables in .env:
+   ```
    DB_HOST=localhost
    DB_USER=youruser
    DB_PASS=yourpassword
    DB_NAME=petkit
    PETKIT_USER=your_email
    PETKIT_PASS=your_password
-4. Run the logger:
+5. Run the logger:
    ```
    python main.py
-5. (Optional) Run with Docker:
+6. (Optional) Run with Docker:
    docker build -t petkit-logger .
    docker run -d --env-file .env petkit-logger
 
