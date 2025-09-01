@@ -61,7 +61,7 @@ The data can then be visualized, queried, and integrated into **custom dashboard
 ## 📊 Demo / Outputs
 <img width="1008" height="630" alt="image" src="https://github.com/user-attachments/assets/02415dee-fa9e-43bd-8e94-ff533ec90a60" />
 
---
+---
 
 <img width="1044" height="318" alt="image" src="https://github.com/user-attachments/assets/44926ea9-aa2c-48a4-bc1e-340fdebfd544" />
 
